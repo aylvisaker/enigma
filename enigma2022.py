@@ -16,50 +16,61 @@ class Text:
 
 
 class MachineComponent:
-    def __init__(self, mapping, left_neighbor=None, right_neighbor=None):
-        self._map = mapping
-        self._inverse_map = {}
+    def __init__(self, permutation: dict, left_neighbor=None, right_neighbor=None):
+        self.permutation = permutation
+        self.inverse = {x: y for y, x in permutation.items()}
         self._left_neighbor = left_neighbor
         self._right_neighbor = right_neighbor
 
     def forward_map(self, key):
-        if not key:
-            pass
-        return self._map[key]
+        if key in self.permutation:
+            return self.permutation[key]
+        else:
+            return key
 
-    def reverse_map(self, light):
-        return self._map[light]
+    def reverse_map(self, key):
+        if key in self.inverse:
+            return self.inverse[key]
+        else:
+            return key
 
 
 class Plugboard(MachineComponent):
-    pass
+    def __init__(self, permutation, left_neighbor=None, right_neighbor=None):
+        super().__init__(permutation, left_neighbor, right_neighbor)
 
 
 class Rotor(MachineComponent):
     # todo dictionaries for maps in various positions OR use modular arithmetic
-    def __init__(self, mapping, left_neighbor=None, right_neighbor=None, position=0):
-        super().__init__(mapping, left_neighbor, right_neighbor)
+    def __init__(self, permutation, left_neighbor=None, right_neighbor=None, position=0):
+        super().__init__(permutation, left_neighbor, right_neighbor)
         self._position = position
 
     def step_forward(self):
         pass
 
-    def step_to(self):
-        pass
+    def step_to(self, position):
+        self._position = position
 
 
 class Reflector(MachineComponent):
-    def __init__(self, mapping):
-        self.mapping = mapping
+    def __init__(self, permutation, left_neighbor=None, right_neighbor=None):
+        super().__init__(permutation, left_neighbor, right_neighbor)
 
 
 class Enigma:
-    pass
-    # plugboard, 3-4 rotors, reflector
-    # rotor / ring positions
-    # step method
-    # press method
-    # copy method
+    def __init__(self, components, settings):
+        self.components = components  # plugboard, 3-4 rotors, reflector
+        self.settings = settings  # rotor / ring positions
+
+    def step_forward(self):
+        pass
+
+    def press(self, keypress):
+        pass
+
+    def copy(self):
+        return Enigma(self.components, self.settings)
 
 
 class Bombe:
@@ -68,9 +79,13 @@ class Bombe:
         self._plaintext = plaintext
 
     def try_pair(self, x, y):
-        # multithreading search for contradiction
+        # multithreading search for contradiction if found return False
         # (enigma_object for each character in _ciphertext)
         pass
+
+    def search(self):
+        pass
+
 
 class HistoricalConstants:
     rI = ['EKMFLGDQVZNTOWYHXUSPAIBRCJ', 'Q']
@@ -89,4 +104,3 @@ class HistoricalConstants:
     alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     alpha_to_numeric = {a: b for a, b in enumerate(alphabet)}
     numeric_to_alpha = {b: a for a, b in enumerate(alphabet)}
-
