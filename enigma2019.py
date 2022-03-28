@@ -1,6 +1,6 @@
 letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-let = {i:letters[i] for i in range(26)}
-num = {let[i]:i for i in range(26)}
+let = {i: letters[i] for i in range(26)}
+num = {let[i]: i for i in range(26)}
 rI = ['EKMFLGDQVZNTOWYHXUSPAIBRCJ', 'Q']
 rII = ['AJDKSIRUXBLHWTMCQGZNPYFVOE', 'E']
 rIII = ['BDFHJLCPRTXVZNYEIWGAKMUSQO', 'V']
@@ -16,7 +16,7 @@ rBt = 'ENKQAUYWJICOPBLMDXZVFTHRGS'
 rCt = 'RDOBJNTKVEHMLFCWZAXGYIPSUQ'
 
 
-class enigma (object):
+class enigma(object):
     def __init__(self, rotors, rin, ref, plg):
         self.notches = [num[rotors[i][1]] for i in range(len(rotors))]
         self.rings = [num[x] for x in rin]
@@ -51,6 +51,7 @@ class enigma (object):
             out[1] = (out[1] + 1) % 26
         out[2] = (out[2] + 1) % 26
         return out
+
     def decrypt(self, pos, ciphertext):
         plaintext = []
         posn = [num[i] for i in pos]
@@ -84,12 +85,11 @@ inpt = 'QATCTQCNWMTVCOPYVFHOLCQTVGMTWOBRFOUBRMQBRIHLLXDBTZLXLGZUQFCWPXPOKOLFFADX
 outpt = enig.decrypt(pos, inpt)
 test1 = no_plug.decrypt(pos, inpt)
 test2 = no_plug.decrypt(pos, outpt)
-print(outpt+'\n')
+print(outpt + '\n')
 print(' plain yields ' + wrong_settings.decrypt(pos, outpt[:13]))
 print('cipher yields ' + wrong_settings.decrypt(pos, inpt[:13]))
 
-
-cipher_text   = 'QATCTQCNWMTVCOPYVFHOLCQTVGMTWOBRFOUBRMQBRIHLLXDBTZLXLGZUQFCWPXPOKOLFFADXDAVTJM'
-into_rotors   = 'MYJBJMBKOQJVBWPAVHFWSBMJVIQJOWCEHWUCEQMCEGFSSXDCJZSXSIZUMHBOPXPWNWSHHYDXDYVJTQ'
+cipher_text = 'QATCTQCNWMTVCOPYVFHOLCQTVGMTWOBRFOUBRMQBRIHLLXDBTZLXLGZUQFCWPXPOKOLFFADXDAVTJM'
+into_rotors = 'MYJBJMBKOQJVBWPAVHFWSBMJVIQJOWCEHWUCEQMCEGFSSXDCJZSXSIZUMHBOPXPWNWSHHYDXDYVJTQ'
 out_of_rotors = 'LRBERJQRLLYIRORSSDWKRAWUBEYBNRDJFRQRLLYIRORFWPRAWURKTWARDSRYEKGKIYCWUJJFRCWQCR'
-plain_text    = 'SECRETMESSAGEWELLDONEYOUCRACKEDTHEMESSAGEWEHOPEYOUENJOYEDLEARNINGABOUTTHEBOMBE'
+plain_text = 'SECRETMESSAGEWELLDONEYOUCRACKEDTHEMESSAGEWEHOPEYOUENJOYEDLEARNINGABOUTTHEBOMBE'
