@@ -1,20 +1,18 @@
 class Text:
-    # todo extend to_numeric and add default value
-    alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    alpha_to_numeric = {a: b for a, b in enumerate(alphabet)}
-    numeric_to_alpha = {b: a for a, b in enumerate(alphabet)}
-
-    def __init__(self, text):
-        # initialize with numeric only
-        self._numeric = None
-        self._text = text
-        self.update_numeric()
+    # todo basic statistics: frequencies, ic, ngrams
+    def __init__(self, text=None, numeric=None):
+        self.numeric = numeric
+        self.text = text
+        if text:
+            self.update_numeric()
+        elif numeric:
+            self.update_text()
 
     def update_text(self):
-        self._text = ''.join(self.numeric_to_alpha[n] for n in self._numeric)
+        self.text = ''.join(HistoricalConstants.numeric_to_alpha[n] for n in self.numeric)
 
     def update_numeric(self):
-        self._numeric = (self.alpha_to_numeric[t] for t in self._text)
+        self.numeric = (HistoricalConstants.alpha_to_numeric[t] for t in self.text)
 
 
 class MachineComponent:
@@ -51,7 +49,8 @@ class Rotor(MachineComponent):
 
 
 class Reflector(MachineComponent):
-    pass
+    def __init__(self, mapping):
+        self.mapping = mapping
 
 
 class Enigma:
@@ -72,4 +71,22 @@ class Bombe:
         # multithreading search for contradiction
         # (enigma_object for each character in _ciphertext)
         pass
+
+class HistoricalConstants:
+    rI = ['EKMFLGDQVZNTOWYHXUSPAIBRCJ', 'Q']
+    rII = ['AJDKSIRUXBLHWTMCQGZNPYFVOE', 'E']
+    rIII = ['BDFHJLCPRTXVZNYEIWGAKMUSQO', 'V']
+    rIV = ['ESOVPZJAYQUIRHXLNFTGKDCMWB', 'J']
+    rV = ['VZBRGITYUPSDNHLXAWMJQOFECK', 'Z']
+    rVI = ['JPGVOUMFYQBENHZRDKASXLICTW', 'ZM']
+    rVII = ['NZJHGRCXMYSWBOUFAIVLPEKQDT', 'ZM']
+    rVIII = ['FKQHTLXOCBJSPDZRAMEWNIUYGV', 'ZM']
+    rA = 'EJMZALYXVBWFCRQUONTSPIKHGD'
+    rB = 'YRUHQSLDPXNGOKMIEBFZCWVJAT'
+    rC = 'FVPJIAOYEDRZXWGCTKUQSBNMHL'
+    rBt = 'ENKQAUYWJICOPBLMDXZVFTHRGS'
+    rCt = 'RDOBJNTKVEHMLFCWZAXGYIPSUQ'
+    alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    alpha_to_numeric = {a: b for a, b in enumerate(alphabet)}
+    numeric_to_alpha = {b: a for a, b in enumerate(alphabet)}
 

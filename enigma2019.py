@@ -76,14 +76,20 @@ rin = ['J', 'G', 'N']
 ref = rB
 plg = ['NK', 'ER', 'AY', 'TJ', 'CB', 'QM', 'SL', 'WO', 'IG', 'FH']
 enig = enigma(rot, rin, ref, plg)
+no_plug = enigma(rot, rin, ref, [])
+wrong_settings = enigma(rot, rin, rA, [])
 
 pos = ['Y', 'Y', 'E']
 inpt = 'QATCTQCNWMTVCOPYVFHOLCQTVGMTWOBRFOUBRMQBRIHLLXDBTZLXLGZUQFCWPXPOKOLFFADXDAVTJM'
-print(enig.decrypt(pos, inpt))
-
-import time
-inpt = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-inpt = inpt * 10000
-t = time.clock()
 outpt = enig.decrypt(pos, inpt)
-print(len(inpt)/(time.clock() - t))
+test1 = no_plug.decrypt(pos, inpt)
+test2 = no_plug.decrypt(pos, outpt)
+print(outpt+'\n')
+print(' plain yields ' + wrong_settings.decrypt(pos, outpt[:13]))
+print('cipher yields ' + wrong_settings.decrypt(pos, inpt[:13]))
+
+
+cipher_text   = 'QATCTQCNWMTVCOPYVFHOLCQTVGMTWOBRFOUBRMQBRIHLLXDBTZLXLGZUQFCWPXPOKOLFFADXDAVTJM'
+into_rotors   = 'MYJBJMBKOQJVBWPAVHFWSBMJVIQJOWCEHWUCEQMCEGFSSXDCJZSXSIZUMHBOPXPWNWSHHYDXDYVJTQ'
+out_of_rotors = 'LRBERJQRLLYIRORSSDWKRAWUBEYBNRDJFRQRLLYIRORFWPRAWURKTWARDSRYEKGKIYCWUJJFRCWQCR'
+plain_text    = 'SECRETMESSAGEWELLDONEYOUCRACKEDTHEMESSAGEWEHOPEYOUENJOYEDLEARNINGABOUTTHEBOMBE'
