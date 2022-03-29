@@ -15,6 +15,16 @@ class Text:
         self.numeric = (HistoricalConstants.alpha_to_numeric[t] for t in self.text)
 
 
+class Permutation:
+    def __init__(self, text):
+        self.text = text
+        self.numeric = text.numeric
+        self.dictionary = dict(zip())
+
+    def inverse(self):
+        pass
+
+
 class MachineComponent:
     def __init__(self, permutation: dict, left_neighbor=None, right_neighbor=None):
         self.permutation = permutation
