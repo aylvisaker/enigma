@@ -1,3 +1,6 @@
+import ciphertext, permutation
+
+
 class Text:
     # todo basic statistics: frequencies, ic, ngrams
     def __init__(self, text=None, numeric=None):
